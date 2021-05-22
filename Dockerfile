@@ -1,3 +1,5 @@
+ # {json:scada} Mongodb Percona docker container - (c) 2021 - Ricardo L. Olsen 
+ 
 FROM percona/percona-server-mongodb:4.4
 
 USER root
@@ -15,3 +17,8 @@ RUN mkdir -p /data/key \
 # Modify keyfile permissions
 RUN chown 1001:1001 /data/key/replica-set.key \
   && chmod 400 /data/key/replica-set.key
+
+#COPY ./demo-docker/mongors1/files /files
+#COPY ./demo-docker/mongo_seed/files /docker-entrypoint-initdb.d
+
+ENV MONGO_INITDB_DATABASE=json_scada

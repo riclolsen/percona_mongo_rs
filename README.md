@@ -1,37 +1,18 @@
-# Set up a secure MongoDB Replica-set for development using Docker
+# A mongodb replica set cluster for test and development of the JSON-SCADA project.
 
-This repository showcases how one can setup a secure MongoDB replica set for development using Docker.  
-I have explained the details of the `docker-compose.yml` file in my blog post, link to which can be found [at this link](https://sntnupl.com/mongodb-replicaset-for-development-using-docker).
+References
+* https://github.com/sntnupl/devcontainers-mongodb-replica-set-with-docker
+* https://jessequinn.info/blog/articles/mongo-docker
 
-## Getting Started
+To execute:
 
-Most of the stuff here will work out-of-the-box, and the containers will be up and running once you run `docker-compose up -d`.
+    docker build -t mongo-replica-set .
+    docker-compose up
 
-However, if you check the `docker-compose.yml` file, we are relying on `.env` file to populate the env variables for the compose.
-A `sample.env` file is provided here, use it to create your own `.env` file.
+To connect use the url as below:
 
-Also, we are using keyfiles for MongoDB nodes in the replica set to authenticate themselves.  
-For that we need to initially create a keyfile.  
-
-In Linux, the following are the commands:  
-```bash
-openssl rand -base64 700 > file.key
-chmod 400 file.key
-sudo chown 999:999 file.key
-```
-
-I have kept a sample file in `.docker/mongodb` path, but you must follow the steps above to generate a new `file.key`.  
-
-Once the MongoDB replica set is up and running, Once everything comes up, you can run `docker-compose status`, and see something like this:  
-
-![replica set status](./images/final-result.jpg?raw=true "Replica set status")
-
-
-To connect to the replica set, you can use mongo client like so:   
-```bash
-$ mongo "mongodb://localhost:30001,localhost:30002,localhost:30003/<MONGO_INITDB_DATABASE>" -u <MONGO_INITDB_USERNAME>
-```  
-Remember to replace the `<MONGO_INITDB_DATABASE>` and `<MONGO_INITDB_USERNAME>` tags with appropriate values that you've put in the `.env` file.  
-
-![Connect to Replica set](./images/connect-to-replica-set.jpg?raw=true "Connect to Replica set")
-
+    mongo mongodb://json_scada:json247scada@localhost:30001,localhost:30002,localhost:30003/json_scada?ssl=false
+    
+    mongo mongodb://admin:json0123admin@mongo1:30001,mongo2:30002,mongo3:30003/admin
+    
+You can change passwords on the ".env" file.

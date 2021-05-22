@@ -5,7 +5,7 @@ services:
     # setup MongoDB cluster for production
     mongo-replica-setup:
         container_name: mongo-setup
-        image: 'mongo-replica-set'
+        image: 'ricardolo/json-scada-mongodb-percona'
         restart: on-failure
         networks:
             - netApplication
@@ -22,7 +22,7 @@ services:
     mongo1:
         hostname: 'mongo1'
         container_name: 'mongo1'
-        image: 'mongo-replica-set'
+        image: 'ricardolo/json-scada-mongodb-percona'
         restart: 'on-failure'
         command: ["-f", "/etc/mongod.conf", 
                   #"--keyFile", "/data/key/replica-set.key", 
@@ -54,7 +54,7 @@ services:
     mongo2:
         hostname: 'mongo2'
         container_name: 'mongo2'
-        image: 'mongo-replica-set'
+        image: 'ricardolo/json-scada-mongodb-percona'
         command: ["-f", "/etc/mongod.conf", 
                   #"--keyFile", "/data/key/replica-set.key", 
                   "--replSet", "${MONGO_REPLICA_SET_NAME}", 
